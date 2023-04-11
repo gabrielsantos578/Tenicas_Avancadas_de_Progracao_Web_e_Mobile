@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {StyleSheet, View, Text, Image, SafeAreaView, Button, TouchableOpacity} from 'react-native';
+import * as React, { useState } from 'react';
+import {StyleSheet, View, Text, Image, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import firebase from '../../services/connectionFirebase';
   
