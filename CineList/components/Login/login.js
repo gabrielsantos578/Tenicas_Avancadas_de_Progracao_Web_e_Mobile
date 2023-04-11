@@ -1,100 +1,100 @@
-import * as React, { useState } from 'react';
-import {StyleSheet, View, Text, Image, SafeAreaView, Button, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Image, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import firebase from '../../services/connectionFirebase';
-  
-export default function Login({changeStatus}) {
+
+export default function Login({ changeStatus }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [type, setType] = useState('login');
 
   //método handleLogin para verificar se é login ou cadastro
-  function handleLogin(){
-    if(type === 'login'){
+  function handleLogin() {
+    if (type === 'login') {
       // Aqui fazemos o login
       const user = firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        changeStatus(user.user.uid)
-      })
-      .catch((err)=>{
-        console.log(err);
-        alert('Email ou senha não cadastrados!');
-        return;
-      })   
-    }else{
-     // Aqui cadastramos o usuario
-     const user = firebase.auth().createUserWithEmailAndPassword(email, password)
-     .then((user)=>{
-       changeStatus(user.user.uid)
-     })
-     .catch((err)=>{
-      console.log(err);
-      alert('Erro ao Cadastrar!');
-      return;
-     })
+        .then((user) => {
+          changeStatus(user.user.uid)
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Email ou senha não cadastrados!');
+          return;
+        })
+    } else {
+      // Aqui cadastramos o usuario
+      const user = firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((user) => {
+          changeStatus(user.user.uid)
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Erro ao Cadastrar!');
+          return;
+        })
     }
   }
 
-    return (
-      <View style={styles.container}>
-        
-        <Image style ={styles.logo} source={require('../../assets/user.jpg')} />  
-        
-        <SafeAreaView>
-          
-          <TextInput
-            label="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            right={<TextInput.Icon icon="email" />}
-          /> <hr/> 
-        
-          <TextInput
-            label="Password"
-            style={styles.input}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry
-            right={<TextInput.Icon icon="eye" />}
-          /> <hr/> 
-    
-          <Button 
-            onPress={() =>this.props.navigation.navigate('TelaPrincipal')}
-            title="Entrar"
-            color="#B8860B"
-          /> 
+  return (
+    <View style={styles.container}>
 
-        </SafeAreaView>
+      <Image style={styles.logo} source={require('../../assets/user.jpg')} />
+
+      <SafeAreaView>
+
+        <TextInput
+          label="Email"
+          style={styles.input}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          right={<TextInput.Icon icon="email" />}
+        />
+
+        <TextInput
+          label="Password"
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry
+          right={<TextInput.Icon icon="eye" />}
+        />
+
+        <Button
+          onPress={() => this.props.navigation.navigate('TelaPrincipal')}
+          title="Entrar"
+          color="#B8860B"
+        />
+
+      </SafeAreaView>
 
 
 
-        <TouchableOpacity style={[styles.handleLogin, { backgroundColor: type === 'login' ? '#4682B4' : '#141414' }]} onPress={'handleLogin'} >
-          <Text style={styles.loginText}>
-            {type === 'login' ? 'Acessar' : 'Cadastrar'}
-          </Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={[styles.handleLogin, { backgroundColor: type === 'login' ? '#4682B4' : '#141414' }]} onPress={'handleLogin'} >
+        <Text style={styles.loginText}>
+          {type === 'login' ? 'Acessar' : 'Cadastrar'}
+        </Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setType(type => type === 'login' ? 'cadastrar' : 'login')} >
-          <Text style={{ textAlign: 'center' }}>
-            {type === 'login' ? 'Criar uma conta' : 'Já possuo uma conta'}
-          </Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={() => setType(type => type === 'login' ? 'cadastrar' : 'login')} >
+        <Text style={{ textAlign: 'center' }}>
+          {type === 'login' ? 'Criar uma conta' : 'Já possuo uma conta'}
+        </Text>
+      </TouchableOpacity>
 
-      </View>
-    );
-   }
-   
-  const styles = StyleSheet.create({
-    
-    container: {
-     flex: 1,
-     backgroundColor: '#000000',
-     padding: 8,
-    },
-    
-    input: {
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    backgroundColor: '#000000',
+    padding: 8,
+  },
+
+  input: {
     marginBottom: 20,
     marginLeft: 40,
     backgroundColor: '#FFF',
@@ -106,10 +106,10 @@ export default function Login({changeStatus}) {
     borderColor: '#141414'
   },
 
-    logo:{
+  logo: {
     width: 350,
     height: 350,
   },
-    
-  }
+
+}
 );
