@@ -29,8 +29,8 @@ let firebaseConfig = {
 /* const app = initializeApp(firebaseConfig); */
 
 if (!firebase.apps.length) {
-    // Initialize Firebase
-     firebase.initializeApp(firebaseConfig);
-    }
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default firebase;

@@ -70,7 +70,7 @@ export default function Login({ changeStatus }) {
 
 
 
-      <TouchableOpacity style={[styles.handleLogin, { backgroundColor: type === 'login' ? '#4682B4' : '#141414' }]} onPress={'handleLogin'} >
+      <TouchableOpacity style={[styles.handleLogin, { backgroundColor: type === 'login' ? '#4682B4' : '#4169E1' }]} onPress={'handleLogin'} >
         <Text style={styles.loginText}>
           {type === 'login' ? 'Acessar' : 'Cadastrar'}
         </Text>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#FFFFFF',
     padding: 8,
   },
 
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 350,
     height: 350,
+    marginLeft: 20
   },
 
 }
