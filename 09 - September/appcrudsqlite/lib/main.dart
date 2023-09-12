@@ -35,12 +35,10 @@ class _HomeState extends State<Home> {
           SizedBox(height: 200),
           ElevatedButton(
             onPressed: () {
-              /*
               Navigator.push(context,
                   MaterialPageRoute(builder: (BuildContext context) {
-                return AddRestaurantes();
+                return Add();
               }));
-              */
             },
             child: Text("Adicionar"),
           ),

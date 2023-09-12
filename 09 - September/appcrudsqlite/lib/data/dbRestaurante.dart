@@ -30,7 +30,7 @@ class MyDb {
 
                         chef varchar(100) not null, 
 
-                        avalizacao numeric(2,1) not null, 
+                        avaliacao numeric(2,1) not null, 
 
                         dataFundacao varchar(11) not null, 
 
