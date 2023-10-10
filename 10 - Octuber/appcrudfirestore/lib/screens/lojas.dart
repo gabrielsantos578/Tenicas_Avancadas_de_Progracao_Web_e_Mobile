@@ -1,33 +1,31 @@
-/*
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Lojas extends StatefulWidget {
+  const Lojas({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Lojas> createState() => _LojasState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LojasState extends State<Lojas> {
   // text fields' controllers
 
   final TextEditingController _nomeController = TextEditingController();
 
-  final TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
 
   final TextEditingController _cidadeController = TextEditingController();
 
-  final TextEditingController _estadoController = TextEditingController();
+  final TextEditingController _ufController = TextEditingController();
 
-  final TextEditingController _celularController = TextEditingController();
-
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
 
   //final TextEditingController _imageController = TextEditingController();
 
-  final CollectionReference _usuarios =
-      FirebaseFirestore.instance.collection('usuarios');
+  final CollectionReference _lojas =
+      FirebaseFirestore.instance.collection('lojas');
 
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
@@ -37,15 +35,13 @@ class _HomePageState extends State<HomePage> {
 
       _nomeController.text = documentSnapshot['nome'];
 
-      _enderecoController.text = documentSnapshot['endereco'];
+      _bairroController.text = documentSnapshot['bairro'];
 
       _cidadeController.text = documentSnapshot['cidade'];
 
-      _estadoController.text = documentSnapshot['estado'];
+      _ufController.text = documentSnapshot['uf'];
 
-      _celularController.text = documentSnapshot['celular'];
-
-      _emailController.text = documentSnapshot['email'];
+      _cepController.text = documentSnapshot['cep'];
 
       //_imageController.text = documentSnapshot['image'];
     }
@@ -69,11 +65,11 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextField(
                   controller: _nomeController,
-                  decoration: const InputDecoration(labelText: 'Usuario'),
+                  decoration: const InputDecoration(labelText: 'Nome'),
                 ),
 
                 TextField(
-                  controller: _enderecoController,
+                  controller: _bairroController,
                   decoration: const InputDecoration(labelText: 'Endereço'),
                 ),
 
@@ -83,18 +79,13 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 TextField(
-                  controller: _estadoController,
-                  decoration: const InputDecoration(labelText: 'Estado'),
+                  controller: _ufController,
+                  decoration: const InputDecoration(labelText: 'UF'),
                 ),
 
                 TextField(
-                  controller: _celularController,
-                  decoration: const InputDecoration(labelText: 'Celular'),
-                ),
-
-                TextField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  controller: _cepController,
+                  decoration: const InputDecoration(labelText: 'CEP'),
                 ),
 
                 /*TextField(
@@ -102,10 +93,10 @@ class _HomePageState extends State<HomePage> {
 
                   //   const TextInputType.numberWithOptions(decimal: true),
 
-                  controller: _estadoController,
+                  controller: _ufController,
 
                   decoration: const InputDecoration(
-                    labelText: 'Estado',
+                    labelText: 'UF',
                   ),
                 ),*/
 
@@ -126,47 +117,42 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () async {
                     final String? nome = _nomeController.text;
 
-                    final String? endereco = _enderecoController.text;
+                    final String? bairro = _bairroController.text;
 
-                    //final double? price =
-
-                    //  double.tryParse(_priceController.text);
+                    //final double? price = double.tryParse(_priceController.text);
 
                     final String? cidade = _cidadeController.text;
 
-                    final String? estado = _estadoController.text;
+                    final String? uf = _ufController.text;
 
-                    final String? celular = _celularController.text;
-
-                    final String? email = _emailController.text;
+                    final String? cep = _cepController.text;
 
                     if (nome != null &&
-                        endereco != null &&
+                        bairro != null &&
                         cidade != null &&
-                        estado != null && 
-                        celular != null &&
-                        email != null) {
+                        uf != null && 
+                        cep != null) {
                       if (action == 'create') {
-// Persist a new product to Firestore
+// Persist a new lojas to Firestore
 
-                        await _usuarios.add({
+                        await _lojas.add({
                           "nome": nome,
-                          "endereco": endereco,
-                          "estado": estado,
+                          "bairro": bairro,
+                          "uf": uf,
                           "cidade": cidade,
-                          "celular": celular,
-                          "email": email
+                          "cep": cep
                         });
                       }
 
                       if (action == 'update') {
-// Update the product
+// Update the lojas
 
-                        await _usuarios.doc(documentSnapshot!.id).update({
+                        await _lojas.doc(documentSnapshot!.id).update({
                           "nome": nome,
-                          "endereco": endereco,
+                          "bairro": bairro,
+                          "uf": uf,
                           "cidade": cidade,
-                          "estado": estado
+                          "cep": cep
                         });
                       }
 
@@ -174,15 +160,13 @@ class _HomePageState extends State<HomePage> {
 
                       _nomeController.text = '';
 
-                      _enderecoController.text = '';
+                      _bairroController.text = '';
 
                       _cidadeController.text = '';
 
-                      _estadoController.text = '';
+                      _ufController.text = '';
 
-                      _celularController.text = '';
-
-                      _emailController.text = '';
+                      _cepController.text = '';
 
                       //_imageController.text = '';
 
@@ -198,28 +182,28 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  // Deleteing a product by id
+  // Deleteing a lojas by id
 
-  Future<void> _deleteProduct(String productId) async {
-    await _usuarios.doc(productId).delete();
+  Future<void> _deleteLojas(String lojasId) async {
+    await _lojas.doc(lojasId).delete();
 
 // Show a snackbar
 
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Usuario excluído!')));
+        .showSnackBar(const SnackBar(content: Text('Loja excluída!')));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AppAlupeUsuario'),
+        title: const Text('AppAlupeLoja'),
       ),
 
-// Using StreamBuilder to display all products from Firestore in real-time
+// Using StreamBuilder to display all lojass from Firestore in real-time
 
       body: StreamBuilder(
-        stream: _usuarios.snapshots(),
+        stream: _lojas.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasData) {
             return ListView.builder(
@@ -232,24 +216,24 @@ class _HomePageState extends State<HomePage> {
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
                     title: Text(documentSnapshot['nome']),
-                    subtitle: Text(documentSnapshot['estado'].toString()),
+                    subtitle: Text(documentSnapshot['bairro']),
                     trailing: SizedBox(
                       width: 100,
                       child: Row(
                         children: [
-// Press this button to edit a single product
+// Press this button to edit a single lojas
 
                           IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () =>
                                   _createOrUpdate(documentSnapshot)),
 
-// This icon button is used to delete a single product
+// This icon button is used to delete a single lojas
 
                           IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () =>
-                                  _deleteProduct(documentSnapshot.id)),
+                                  _deleteLojas(documentSnapshot.id)),
                         ],
                       ),
                     ),
@@ -265,7 +249,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
 
-// Add new product
+// Add new lojas
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),
@@ -276,4 +260,3 @@ class _HomePageState extends State<HomePage> {
 }
 
 class pressed {}
-*/
