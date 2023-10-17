@@ -1,0 +1,19 @@
+
+npx create-react-app applerapi
+
+npm install -g expo-cli --force
+npm install --save expo --force
+
+--- retire o "expo": "^49.0.13", que está entre o axios e o react
+
+npm install axios
+
+npm install react-native
+npm install -g react-native-cli
+
+npx expo install react-native-web@~0.19.6
+npx expo install react-native-web
+
+npx expo start
+npm start
+
